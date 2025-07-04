@@ -1,0 +1,42 @@
+app:
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    password: ${ADMIN_PASSWORD:Admin@123456}
+
+spring:
+  application:
+    name: auth
+
+  datasource:
+    url: ${DB_URL:jdbc:mariadb://localhost:3306/java_snake_learn?connectTimeout=25000&socketTimeout=230000&serverTimeZone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:123456789}
+    driver-class-name: ${DB_DRIVER:org.mariadb.jdbc.Driver}
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10}
+      minimum-idle: ${DB_MIN_IDLE:2}
+      idle-timeout: ${DB_IDLE_TIMEOUT:600000}
+      max-lifetime: ${DB_MAX_LIFETIME:1800000}
+      connection-timeout: ${DB_CONNECTION_TIMEOUT:30000}
+      pool-name: ${DB_POOL_NAME:notificationHikariCP}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:none}
+    show-sql: ${JPA_SHOW_SQL:true}
+    properties:
+      hibernate:
+        dialect: ${JPA_HIBERNATE_DIALECT:org.hibernate.dialect.MariaDBDialect}
+        format_sql: ${JPA_FORMAT_SQL:true}
+        use_sql_comments: ${JPA_USE_SQL_COMMENTS:false}
+        type:
+          preferred_instant_jdbc_type: ${JPA_INSTANT_TYPE:TIMESTAMP}
+        hbm2ddl:
+          auto: ${JPA_HBM2?L_AUTO:none}
+
+  liquibase:
+    enabled: ${LIQUIBASE_ENABLE:true}
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    contexts: ${LIQUIBASE_CONTEXTS:development,test,production}
+    default-schema: ${LIQUIBASE_DEFAULT_SCHEMA:java_snake_learn}
+    rollback-file: ${LIQUIBASE_ROLLBACK_FILE:rollback.sql}
